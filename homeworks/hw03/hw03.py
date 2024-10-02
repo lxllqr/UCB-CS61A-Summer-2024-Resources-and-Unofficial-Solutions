@@ -14,15 +14,12 @@ def pascal(row, column):
     6
     """
     "*** YOUR CODE HERE ***"
-    def pascal_list(n):
-        if n == 0:
-            return [1]
-        if n == 1:
-            return [1, 1]
-        last_pascal = pascal_list(n-1)
-        return [1] + [last_pascal[i-1] + last_pascal[i] for i in range(1, n)] + [1]
-
-    return 0 if column > row else pascal_list(row)[column]
+    if row < column:
+        return 0
+    elif row == 0 or column == 0 or row == column:
+        return 1
+    else:
+        return pascal(row - 1, column) + pascal(row - 1, column - 1)
 
 
 def insert_items(s, before, after):
@@ -156,7 +153,7 @@ def berry_finder(t):
     True
     """
     "*** YOUR CODE HERE ***"
-    return label(t) == 'berry' or any([label(b) == 'berry' for b in branches(t)]) or any([berry_finder(b) for b in branches(t)])
+    return label(t) == 'berry' or any([berry_finder(b) for b in branches(t)])
 
 
 HW_SOURCE_FILE=__file__
@@ -211,6 +208,12 @@ def move_stack(n, start, end):
     """
     assert 1 <= start <= 3 and 1 <= end <= 3 and start != end, "Bad start/end"
     "*** YOUR CODE HERE ***"
+    if n == 1:
+        print_move(start, end)
+    else:
+        move_stack(n - 1, start, 6 - start - end)
+        print_move(start, end)
+        move_stack(n - 1, 6 - start - end, end)    
 
 
 from operator import sub, mul
